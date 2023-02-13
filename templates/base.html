@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootsrap 5 CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.13.1/b-2.3.3/b-html5-2.3.3/b-print-2.3.3/date-1.2.0/datatables.min.css"/>
+
+    <title>İmtek Mühendislik</title>
+  </head>
+  <body>
+    <nav class="navbar bg-primary" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="{% static 'img/logo.png' %}" alt="Logo" width="60" class="d-inline-block align-text-top"/>
+          İmtek Mühendislik
+        </a>
+      </div>
+    </nav>
+    <div class="container">{% block content %} {% endblock %}</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.13.1/b-2.3.3/b-html5-2.3.3/b-print-2.3.3/date-1.2.0/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    
+    <!-- Database Script -->
+    <script>
+      $("#inoutTable").DataTable({
+        paging: true,
+        pageLength: 10,
+        lengthChange: false,
+        autoWidth: true,
+        searching: true,
+        bInfo: false,
+        bSort: true,
+        dom: "lBfrtip",
+        language: {
+          url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/tr.json",
+        },
+        buttons: [
+          {
+            extend: "copy",
+            text: '<i class="fas fa-clone"></i>',
+            className: "btn btn-secondary",
+            titleAttr: "Copy",
+            exportOptions: {
+              columns: [1, 2, 3, 4, 5],
+            },
+          },
+          {
+            extend: "excel",
+            text: '<i class="fas fa-file-excel"></i>',
+            className: "btn btn-secondary",
+            titleAttr: '"Excel',
+            exportOptions: {
+              columns: [1, 2, 3, 4, 5],
+            },
+          },
+          {
+            extend: "print",
+            text: '<i class="fas fa-print"></i>',
+            className: "btn btn-secondary",
+            titleAttr: "Print",
+            exportOptions: {
+              columns: [1, 2, 3, 4, 5],
+            },
+            customize: function (win) {
+              $(win.document.body).css("font-size", "10pt");
+              $(win.document.body)
+                .find("table")
+                .addclass("compact")
+                .css("font-size", "inherit");
+            },
+          },
+          {
+            extend: "pdf",
+            text: '<i class="fas fa-file-pdf"></i>',
+            className: "btn btn-secondary",
+            titleAttr: "PDF",
+            exportOptions: {
+              columns: [1, 2, 3, 4, 5],
+            },
+            tableHeader: {
+              alignment: "center",
+            },
+            customize: function (doc) {
+              doc.styles.tableHeader.alignment = "center";
+              doc.styles.tableBodyOdd.alignment = "center";
+              doc.styles.tableBodyEven.alignment = "center";
+              doc.styles.tableHeader.fonSize = 7;
+              doc.defaultStyle.fontSize = 6;
+              doc.content[1].table.widths = Array(
+                doc.content[1].table.body[1].length + 1
+              )
+                .join("*")
+                .split("");
+            },
+          },
+        ],
+      });
+    </script>
+    {% block js_files %} {% endblock %}
+  </body>
+</html>

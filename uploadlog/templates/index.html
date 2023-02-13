@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="mt-5">
+<h5>Giriş Çıkış Listesi</h5>
+</div>
+
+<table class="mb-2">
+<tr>
+<td><form method="post">
+  {% csrf_token %}
+    Başlangıç:
+    <input type="date" name="fromdate">
+    Bitiş:
+    <input type="date" name="todate">
+    <input class="btn btn-primary" type="submit" value="Ara">
+</form></td>
+<td><form method="get">
+  <input class="btn btn-success" type="submit" value="Temizle">
+</form></td>
+</tr>
+</table>
+
+<table class="table table-striped" id="inoutTable">
+  <thead class="table-primary">
+    <tr>
+      <th scope="col">İşlem No</th>
+      <th scope="col">Ad Soyad</th>
+      <th scope="col">Saat</th>
+      <th scope="col" tabindex="0" aria-controls="#inoutTable">Tarih</th>
+      <th scope="col">Durum</th>
+      <th scope="col">Not</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in data %}
+      {% if i.girisCikis == 'GEÇ GİRİŞ' %}
+      <tr class="table-danger">
+      {% else %}
+      <tr class="">
+      {% endif %}
+        <th scope="row">{{i.id}}</th>
+        <td>{{i.personelName}}</td>
+        <td>{{i.time}}</td>
+        <td>{{i.date}}</td>
+        <td>{{i.girisCikis}}</td>
+        <td>{{i.notlar}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
