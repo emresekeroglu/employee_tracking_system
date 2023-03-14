@@ -50,5 +50,25 @@
     {% endfor %}
   </tbody>
 </table>
+
+<hr>
+<table class="table table-striped" id="passlar">
+  <thead class="table-primary">
+    <tr>
+      <th scope="col">Kart No</th>
+      <th scope="col">Ad Soyad</th>
+      <th scope="col">Tarih</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pas in pass %}
+        <tr>
+          <th scope="row">{{pas.personelCardNo}}</th>
+          <th scope="row">{{pas.personelName}}</th>
+          <th scope="row">{{pas.pasTarihi}}</th>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
 </div>
 {% endblock %}

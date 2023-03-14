@@ -44,7 +44,7 @@ class InOutAdmin(admin.ModelAdmin):
         try:
           perName = PersonelList.objects.get(personelCardNo = fields[0]).personelName
         except ObjectDoesNotExist:
-          perName = 'Yeni Personel Kartı Tanımlanmamış'
+          perName = 'Yeni Personel - Kartı Tanımlanmamış'
         
         if fields[1] > '17:30':
             girCik = "ÇIKIŞ"
